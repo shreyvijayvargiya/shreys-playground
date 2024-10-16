@@ -3,3 +3,4 @@ yarn.lock
 yarn-error.lock
 .next
 .vscode
+.DS_Store
