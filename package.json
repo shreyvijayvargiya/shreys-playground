@@ -1,5 +1,5 @@
 {
-	"name": "indian-dishes",
+	"name": "karyam-playground",
 	"version": "1",
 	"license": "MIT",
 	"scripts": {
@@ -74,6 +74,7 @@
 		"react-dom": "17.0.0",
 		"react-dropzone": "^14.2.3",
 		"react-github-calendar": "^4.1.2",
+		"react-globe.gl": "^2.27.3",
 		"react-gridlines": "^1.1.7",
 		"react-hook-form": "^7.52.2",
 		"react-icons": "^4.1.0",
