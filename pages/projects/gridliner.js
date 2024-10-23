@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { gsap } from "gsap";
-import { CrossIcon } from "lucide-react";
+import { CrossIcon, RefreshCwIcon } from "lucide-react";
+import { Button } from "@mantine/core";
+import { IoReloadCircle } from "react-icons/io5";
 
 const images = [
 	{ id: 1, src: "img-1.jpg" },
@@ -26,17 +28,39 @@ const gridSize = 36;
 const imagePositions = [1, 3, 7, 10, 14, 17, 20, 24, 30, 34, 36];
 
 const Gridliner = () => {
+	const animationRef = useRef();
 	const [selectedImage, setSelectedImage] = useState(null);
+	const [config, setConfig] = useState({
+		grids: 3,
+		animationDirection: "x",
+		duration: 10,
+	});
 
+	const animation = () => {
+		if (config.animationDirection === "vertical") {
+			return { y: "-=300" };
+		} else {
+			return { x: "-=300" };
+		}
+	};
+
+	const tl = gsap.timeline({});
 	useEffect(() => {
-		const tl = gsap.timeline({ repeat: -1, repeatDelay: 1 });
+		if (tl.isActive()) {
+			tl.kill();
+		}
 		tl.to(".grid-container", {
-			x: `-=300`,
+			...animation(),
 			delay: 1,
-			duration: 20,
+			stagger: 5,
+			duration: config.duration,
 			ease: "linear",
 		});
-	}, []);
+
+		return () => {
+			tl.kill();
+		};
+	}, [config]);
 
 	const openModal = (imageSrc) => {
 		setSelectedImage(imageSrc);
@@ -48,8 +72,67 @@ const Gridliner = () => {
 
 	return (
 		<div className="relative w-full h-screen overflow-hidden flex flex-col justify-center items-center">
+			<div className="fixed bottom-10 left-10 z-50 border boder-gray-400 p-4 bg-gray-50 rounded-xl">
+				<div className="flex justify-between items-center my-2 gap-4">
+					<p>Duration</p>
+					<input
+						value={config.duration}
+						onChange={(e) => {
+							setConfig((prevState) => ({
+								...prevState,
+								duration: e.target.value,
+							}));
+						}}
+						type="number"
+						className="outline-none border boder-gray-200 rounded-md focus:outline-none focus:border focus:border-gray-200 p-1"
+					/>
+				</div>
+				<div className="flex justify-between items-center my-2 gap-4">
+					<p>Grids</p>
+					<input
+						value={config.grids}
+						onChange={(e) => {
+							setConfig((prevState) => ({
+								...prevState,
+								grids: e.target.value,
+							}));
+						}}
+						type="number"
+						className="outline-none border boder-gray-200 rounded-md focus:outline-none focus:border focus:border-gray-200 p-1"
+					/>
+				</div>
+				<div className="flex justify-between items-center my-2 gap-4">
+					<p>Direction</p>
+					<select
+						className="outline-none border border-gray-200 rounded-md focus:outline-none focus:border focus:border-gray-200 p-1"
+						onChange={(e) => {
+							console.log(e.target.value);
+							setConfig((prevState) => ({
+								...prevState,
+								animationDirection: e.target.value,
+							}));
+						}}
+					>
+						<option key="vertical" value="vertical">
+							vertical
+						</option>
+						<option key="horizontal" value="horizontal">
+							horizontal
+						</option>
+					</select>
+				</div>
+				<button
+					className="p-2 hover:bg-white w-full flex justify-start gap-1 items-center text-sm"
+					onClick={() => {
+						tl.restart();
+					}}
+				>
+					<RefreshCwIcon size={14} />
+					Restart
+				</button>
+			</div>
 			<div
-				className="grid-container grid grid-cols-12 justify-center items-center mx-auto"
+				className={`grid-container grid grid-cols-${config.grids} justify-center items-center mx-auto`}
 				style={{
 					opacity: selectedImage ? 0.2 : 1,
 				}}
