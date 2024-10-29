@@ -22,8 +22,8 @@ const images = [
 	{ id: 17, src: "img-17.jpg" },
 	{ id: 18, src: "img-18.jpg" },
 ];
-const gridSize = 36;
-const imagePositions = [1, 3, 7, 10, 14, 17, 20, 24, 30, 34, 36];
+const gridSize = 44;
+const imagePositions = [1, 3, 7, 10, 14, 17, 20, 24, 27, 30, 33, 37, 39, 43];
 
 const Gridliner = () => {
 	const [selectedImage, setSelectedImage] = useState(null);
@@ -137,7 +137,7 @@ const Gridliner = () => {
 				{Array.from({ length: gridSize }).map((_, idx) => (
 					<div
 						key={idx}
-						className="w-32 h-32 p-1 flex items-center justify-center border boder-gray-200"
+						className="w-32 h-32 p-1 flex items-center justify-center border boder-gray-200 "
 					>
 						{imagePositions.includes(idx + 1) ? (
 							<div
@@ -153,7 +153,7 @@ const Gridliner = () => {
 										images[imagePositions.indexOf(idx + 1)].src
 									}`}
 									alt={`Clothes ${idx + 1}`}
-									className="w-28 h-28"
+									className="w-28 h-28 hover:bg-gray-50 transform hover:scale-90 transition-all duration-100 ease-in"
 								/>
 							</div>
 						) : null}
