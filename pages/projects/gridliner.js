@@ -1,8 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
-import { gsap } from "gsap";
+import React, { useState, useEffect } from "react";
 import { CrossIcon, RefreshCwIcon } from "lucide-react";
-import { Button } from "@mantine/core";
-import { IoReloadCircle } from "react-icons/io5";
+import { gsap } from "gsap";
 
 const images = [
 	{ id: 1, src: "img-1.jpg" },
@@ -28,11 +26,10 @@ const gridSize = 36;
 const imagePositions = [1, 3, 7, 10, 14, 17, 20, 24, 30, 34, 36];
 
 const Gridliner = () => {
-	const animationRef = useRef();
 	const [selectedImage, setSelectedImage] = useState(null);
 	const [config, setConfig] = useState({
 		grids: 3,
-		animationDirection: "x",
+		animationDirection: "vertical",
 		duration: 10,
 	});
 
