@@ -28,7 +28,7 @@ const imagePositions = [1, 3, 7, 10, 14, 17, 20, 24, 27, 30, 33, 37, 39, 43];
 const Gridliner = () => {
 	const [selectedImage, setSelectedImage] = useState(null);
 	const [config, setConfig] = useState({
-		grids: 3,
+		grids: 4,
 		animationDirection: "vertical",
 		duration: 10,
 	});
